@@ -67,8 +67,8 @@ sh crea-lanciatore.sh
 a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessori** e una volta lanciato sarà presente nel vassoio di sistema in basso a destra come icona **DP**, cliccando sopra si aprirà la finestra ed all'interno potete trascinare i vostri file supportati.
 
 ## 👨‍🔧 Note tecniche
-
-Se avete segnalazioni o migliorie da far fare comunicatelo, per ora la struttura è molto semplice
+- se si effetuano modifiche al file dropprint.py contenuto nella cartella /Scaricati/dropprint-main/ le modifiche avverranno anche nel programma in modo diretto, in caso di aggiornamenti, conviene aggiornare il contenuto di solo quel file.
+- Se avete segnalazioni o migliorie da far fare comunicatelo, per ora la struttura è molto semplice, di fatto prendi i file butti dentro e lui manda in stampa immediata
 
 ## 📜 Licenza
 
