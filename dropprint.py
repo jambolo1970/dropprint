@@ -82,7 +82,7 @@ class DropPrint(QWidget):
         )
 
         frame_layout = QVBoxLayout(self.drop_frame)
-        self.drop_label = QLabel("Trascina qui i file per stampare")
+        self.drop_label = QLabel("Trascina qui i file per stampare\n(PDF, JPG, PNG, TXT)")
         self.drop_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.drop_label.setFont(QFont("sans-serif", 12))
         frame_layout.addWidget(self.drop_label)
