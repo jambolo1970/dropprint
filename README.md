@@ -40,6 +40,28 @@ dropprint
 chmod +x packaging/install_opensuse.sh
 ./packaging/install_opensuse.sh
 ```
+In caso di problemi con i repository sostituire nel file `ìnstall_opensuse.sh` nella riga 12 dovrebbe esserci scritto `sudo zypper --non-interactive refresh` sostituire con :
+```bash
+if command -v zypper >/dev/null 2>&1; then
+  echo "==> Refresh repository (ignoro eventuali errori)"
+  sudo zypper --non-interactive --gpg-auto-import-keys refresh || true
+
+  echo "==> Installazione dipendenze base"
+  if ! sudo zypper --non-interactive install --no-refresh \
+      python311 python311-pip python311-setuptools python311-wheel \
+      python311-devel gcc cups cups-client cups-devel; then
+    echo "==> Fallback a python3"
+    sudo zypper --non-interactive install --no-refresh \
+      python3 python3-pip python3-setuptools python3-wheel \
+      python3-devel gcc cups cups-client cups-devel || true
+  fi
+else
+  echo "zypper non trovato. Questo script è pensato per openSUSE."
+  exit 1
+fi
+```
+in questo caso si fermerà solo se manca qualche dipendenza che serve all'utility
+
 
 Lo script:
 - installa le dipendenze di sistema
