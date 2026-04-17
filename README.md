@@ -1,6 +1,8 @@
-# DropPrint
+# DropPrint 🦎🖨️
 
-DropPrint è una piccola applicazione desktop per Linux che permette di trascinare file su una finestra e inviarli subito alla stampante selezionata tramite CUPS.
+DropPrint è una piccola applicazione desktop per Linux, principalmente **OpenSuse** (ma dovrebbe funzionare anche su altre distro Linux) che permette di trascinare file su una finestra e inviarli subito alla stampante selezionata tramite CUPS, diventa molto utile se i file sono parecchi, ad esempio la stampa di estratti conto, copie di fatture xml trasformate in pdf.
+Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè lo selezionate e trascinate all'interno della finesta, prima però selezionate la stampante che volete utilizzare.
+È perfetto per file immagine e PDF, gestite da CUPS
 
 ## Funzioni principali
 
@@ -17,6 +19,15 @@ DropPrint è una piccola applicazione desktop per Linux che permette di trascina
 - click sul tray per aprire o nascondere la finestra
 - chiusura finestra senza terminare il programma
 
+
+## Caratteristiche
+- 🚀 **Batch Printing**: trascina decine di file e stampali tutti insieme.
+- 📋 **Coda visibile**: monitora quali file sono stati inviati con successo.
+- 🎛️ **Selezione stampante**: cambia al volo la stampante di destinazione.
+- 🐧 **Ottimizzato per openSUSE**: integrazione perfetta con CUPS.
+- 📄 **Tipi di file supportati**: CUPS gestisce nativamente PDF, immagini (JPG, PNG)
+- **File non supportati**: Se trascini un file .docx, CUPS potrebbe non sapere come renderizzarlo a meno che non ci siano librerie che lo supportino
+
 ## Requisiti
 
 - Linux con CUPS attivo
@@ -24,14 +35,23 @@ DropPrint è una piccola applicazione desktop per Linux che permette di trascina
 - PyQt6
 - pycups
 
+## Installazione su openSUSE
+Assicurati di avere le dipendenze di sistema:
+```bash
+sudo zypper install python3-pycups python3-qt6
+```
+
 ## Avvio rapido
 
+Apri un terminale nella directory dove si trova il programma dropprint.py
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -U pip
-pip install -e .
-dropprint
+cd ~/Scaricati/dropprint/
+chmod +x dropprint.py
+```
+per lanciare il programma
+
+```
+python3 dorpprint.py
 ```
 
 ## Installazione su openSUSE Leap 15.5
@@ -40,59 +60,11 @@ dropprint
 chmod +x packaging/install_opensuse.sh
 ./packaging/install_opensuse.sh
 ```
-In caso di problemi con i repository sostituire nel file `ìnstall_opensuse.sh` nella riga 12 dovrebbe esserci scritto `sudo zypper --non-interactive refresh` sostituire con :
-```bash
-if command -v zypper >/dev/null 2>&1; then
-  echo "==> Refresh repository (ignoro eventuali errori)"
-  sudo zypper --non-interactive --gpg-auto-import-keys refresh || true
-
-  echo "==> Installazione dipendenze base"
-  if ! sudo zypper --non-interactive install --no-refresh \
-      python311 python311-pip python311-setuptools python311-wheel \
-      python311-devel gcc cups cups-client cups-devel; then
-    echo "==> Fallback a python3"
-    sudo zypper --non-interactive install --no-refresh \
-      python3 python3-pip python3-setuptools python3-wheel \
-      python3-devel gcc cups cups-client cups-devel || true
-  fi
-else
-  echo "zypper non trovato. Questo script è pensato per openSUSE."
-  exit 1
-fi
-```
-in questo caso si fermerà solo se manca qualche dipendenza che serve all'utility
-
-
-Lo script:
-- installa le dipendenze di sistema
-- installa DropPrint in `~/.local`
-- copia il file `.desktop`
-- installa l'icona
-- crea un comando `dropprint`
-
-## Repository
-
-```text
-dropprint-github/
-├── pyproject.toml
-├── README.md
-├── LICENSE
-├── .gitignore
-├── src/dropprint/
-│   ├── __init__.py
-│   ├── __main__.py
-│   ├── app.py
-│   └── assets/
-│       ├── dropprint.png
-│       └── dropprint.svg
-└── packaging/
-    ├── install_opensuse.sh
-    └── dropprint.desktop
-```
+``
 
 ## Note tecniche
 
-Il bug originale nasceva dal fatto che in CUPS/IPP lo stato del job è esposto come `job-state`, non come `state`. Inoltre i job completati possono sparire dalla lista generale, quindi è più robusto interrogare gli attributi del singolo job con `getJobAttributes(job_id)`. Qt prevede il tray tramite `QSystemTrayIcon`, con verifica preventiva della disponibilità del vassoio di sistema.
+Se avete segnalazioni o migliorie da far fare comunicatelo, per ora la struttura è molto semplice
 
 ## Licenza
 
