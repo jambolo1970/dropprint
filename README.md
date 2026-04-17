@@ -54,13 +54,6 @@ per lanciare il programma
 python3 dorpprint.py
 ```
 
-## Installazione su openSUSE Leap 15.5
-
-```bash
-chmod +x packaging/install_opensuse.sh
-./packaging/install_opensuse.sh
-```
-``
 
 ## Note tecniche
 
