@@ -1,10 +1,10 @@
 # DropPrint 🦎🖨️
 
-DropPrint è una piccola applicazione desktop per Linux, principalmente **OpenSuse** (ma dovrebbe funzionare anche su altre distro Linux) che permette di trascinare file su una finestra e inviarli subito alla stampante selezionata tramite CUPS, diventa molto utile se i file sono parecchi, ad esempio la stampa di estratti conto, copie di fatture xml trasformate in pdf.
-Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè lo selezionate e trascinate all'interno della finesta, prima però selezionate la stampante che volete utilizzare.
-È perfetto per file immagine e PDF, gestite da CUPS
+DropPrint è una piccola applicazione desktop per Linux, principalmente **OpenSuse** (ma dovrebbe funzionare anche su altre distro Linux) che permette di trascinare file su una finestra e inviarli subito alla stampante selezionata, ci si appoggia al server di stampa CUPS, diventa molto utile se i file sono parecchi, ad esempio la stampa di estratti conto, copie di fatture xml trasformate in pdf, questo in un ambito ufficio, oppure in contesti dove si mandano in stampa molti file.
+Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè selezionate e trascinate all'interno della finesta, prima però selezionate la stampante che volete utilizzare, perché una volta inseriti all'interno della finesta di DropPrint la stampa è immediata.
+È perfetto per file immagine e PDF, gestite appunto da CUPS.
 
-## Funzioni principali
+## ℹ️ Funzioni principali
 
 - drag and drop multiplo dei file
 - selezione stampante attiva
@@ -20,7 +20,7 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè lo s
 - chiusura finestra senza terminare il programma
 
 
-## Caratteristiche
+## ℹ️ Caratteristiche
 - 🚀 **Batch Printing**: trascina decine di file e stampali tutti insieme.
 - 📋 **Coda visibile**: monitora quali file sono stati inviati con successo.
 - 🎛️ **Selezione stampante**: cambia al volo la stampante di destinazione.
@@ -28,25 +28,25 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè lo s
 - 📄 **Tipi di file supportati**: CUPS gestisce nativamente PDF, immagini (JPG, PNG)
 - **File non supportati**: Se trascini un file .docx, CUPS potrebbe non sapere come renderizzarlo a meno che non ci siano librerie che lo supportino
 
-## Requisiti
+## ⚙️ Requisiti
 
 - Linux con CUPS attivo
 - Python 3.10+
 - PyQt6
 - pycups
 - 
-## Installazione su linux in generale
+## 🖥️ Installazione su linux in generale
 - Clicca sul tasto in alto a destra verde --> download ZIP
 - Vai nella cartella /home/UTENTE/Scaricati/ e scompatta dropprin-main.zip
 - Entra nella cartella e apri il terminale, poi segui i passagi sotto
 
-## Installazione su openSUSE
+## 💻 Installazione su openSUSE
 Assicurati di avere le dipendenze di sistema:
 ```bash
 sudo zypper install python3-pycups python3-qt6
 ```
 
-## Avvio rapido
+## 🚀 Avvio rapido
 
 Apri un terminale nella directory dove si trova il programma dropprint.py
 ```bash
@@ -66,10 +66,10 @@ sh crea-lanciatore.sh
 ```
 a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessori** e una volta lanciato sarà presente nel vassoio di sistema in basso a destra come icona **DP**, cliccando sopra si aprirà la finestra ed all'interno potete trascinare i vostri file supportati.
 
-## Note tecniche
+## 👨‍🔧 Note tecniche
 
 Se avete segnalazioni o migliorie da far fare comunicatelo, per ora la struttura è molto semplice
 
-## Licenza
+## 📜 Licenza
 
 MIT
