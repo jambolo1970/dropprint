@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#
+#    Nome programma: Crea Lanciatore
+#    Autore: Gianluca Bolognesi
+#    Vesione: Aprile 2026
+#    Descrizione: programma bach per creare un lanciatore ed installarlo nel menu del Sistema Operativo .
+#
+
 # 1. Ottiene il percorso assoluto della cartella dove si trova lo script
 DIR_ATTUALE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
