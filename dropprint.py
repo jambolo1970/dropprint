@@ -1,3 +1,10 @@
+"""
+Nome programma: DropPrint v.2026-04
+Autore: Gianluca Bolognesi
+Vesione: Aprile 2026
+Descrizione: Utilità di stampa drag and drop per Linux con supporto CUPS e try nel vassoio di sistema .
+"""
+
 import os
 import sys
 import cups
