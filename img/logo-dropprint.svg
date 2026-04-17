@@ -1,13 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-  <rect x="16" y="16" width="224" height="224" rx="56" fill="#1b68c9"/>
-  <rect x="88" y="44" width="80" height="52" rx="10" fill="#f5f8fc"/>
-  <polygon points="152,44 168,60 168,44" fill="#dce2eb"/>
-  <polygon points="128,68 96,100 114,100 114,132 142,132 142,100 160,100" fill="#23ce9d"/>
-  <rect x="56" y="92" width="144" height="72" rx="18" fill="#f3f6fa"/>
-  <rect x="70" y="96" width="116" height="30" rx="10" fill="#2c3e50"/>
-  <rect x="86" y="138" width="84" height="14" rx="6" fill="#1e2530"/>
-  <polygon points="98,146 166,146 154,198 110,198" fill="#ffffff"/>
-  <line x1="114" y1="160" x2="150" y2="160" stroke="#b0bac7" stroke-width="4"/>
-  <line x1="112" y1="172" x2="148" y2="172" stroke="#b0bac7" stroke-width="4"/>
-  <circle cx="181" cy="118" r="6" fill="#4ee357"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="100" ry="100" fill="#2ecc71"/>
+
+  <text 
+    x="256" 
+    y="360" 
+    text-anchor="middle" 
+    font-family="Verdana, Geneva, sans-serif" 
+    font-size="280" 
+    font-weight="bold" 
+    fill="#FFFFFF"
+    letter-spacing="-15">
+    DP
+  </text>
 </svg>
