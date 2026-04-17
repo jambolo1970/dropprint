@@ -50,7 +50,7 @@ sudo zypper install python3-pycups python3-qt6
 
 Apri un terminale nella directory dove si trova il programma dropprint.py
 ```bash
-cd ~/Scaricati/dropprint/
+cd ~/Scaricati/dropprint-main/
 chmod +x dropprint.py
 ```
 per lanciare il programma in modo diretto
@@ -60,7 +60,7 @@ python3 dorpprint.py
 ```
 per avere un icona e niente terminali, apri il terminale
 ```bash
-cd ~/Scaricati/dropprint/
+cd ~/Scaricati/dropprint-main/
 chmod +x crea-lanciatore.sh
 sh crea-lanciatore.sh
 ```
