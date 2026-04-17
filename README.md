@@ -34,6 +34,11 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè lo s
 - Python 3.10+
 - PyQt6
 - pycups
+- 
+## Installazione su linux in generale
+- Clicca sul tasto in alto a destra verde --> download ZIP
+- Vai nella cartella /home/UTENTE/Scaricati/ e scompatta dropprin-main.zip
+- Entra nella cartella e apri il terminale, poi segui i passagi sotto
 
 ## Installazione su openSUSE
 Assicurati di avere le dipendenze di sistema:
@@ -48,12 +53,18 @@ Apri un terminale nella directory dove si trova il programma dropprint.py
 cd ~/Scaricati/dropprint/
 chmod +x dropprint.py
 ```
-per lanciare il programma
+per lanciare il programma in modo diretto
 
 ```
 python3 dorpprint.py
 ```
-
+per avere un icona e niente terminali, apri il terminale
+```bash
+cd ~/Scaricati/dropprint/
+chmod +x crea-lanciatore.sh
+sh crea-lanciatore.sh
+```
+a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessori** e una volta lanciato sarà presente nel vassoio di sistema in basso a destra come icona **DP**, cliccando sopra si aprirà la finestra ed all'interno potete trascinare i vostri file supportati.
 
 ## Note tecniche
 
