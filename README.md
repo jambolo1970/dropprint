@@ -27,7 +27,7 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè sele
 - 🐧 **Ottimizzato per openSUSE**: integrazione perfetta con CUPS.
 - 📄 **Tipi di file supportati**: CUPS gestisce nativamente PDF, immagini (JPG, PNG)
   - aggiunta compatibilità con formati :
-  - ".odt", ".ods", ".odp" ---> LibreOffice / OpenOffcie
+  - ".odt", ".ods", ".odp" ---> LibreOffice / OpenOffice
   - ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx" --> MS Office (potrebbero non essere 100% impaginati correttamente, soprattutto DOCX complessi)
   - ".rtf", ".csv" 
 - **File non supportati**: Se trascini un file non supportato non viene accettato, CUPS potrebbe non sapere come renderizzarlo a meno che non ci siano librerie che lo supportino
