@@ -9,6 +9,9 @@ import os
 import sys
 import cups
 import time
+import subprocess
+import shutil
+import tempfile
 from pathlib import Path
 
 from PyQt6.QtCore import Qt, QTimer
@@ -29,6 +32,10 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+#if sys.version_info < (3, 7):
+#    print("Errore: DropPrint richiede Python 3.7 o superiore.")
+#    print("Avvia con python3.11 dropprint.py")
+#    sys.exit(1)
 
 class DropPrint(QWidget):
     JOB_PENDING = getattr(cups, "IPP_JOB_PENDING", 3)
@@ -53,12 +60,120 @@ class DropPrint(QWidget):
             sys.exit(1)
 
         self.active_jobs = {}
+        self.base_dir = Path(__file__).resolve().parent
+        self.local_tmp_dir = self.base_dir / "tmp"
+        self.local_tmp_dir.mkdir(exist_ok=True)
         self.init_ui()
         self.init_tray()
 
         self.monitor_timer = QTimer(self)
         self.monitor_timer.timeout.connect(self.update_jobs_status)
         self.monitor_timer.start(2000)
+
+    def convert_to_pdf(self, input_file):
+        input_path = Path(input_file)
+
+        libreoffice_cmd = shutil.which("libreoffice") or shutil.which("soffice")
+        if not libreoffice_cmd:
+            msg = "LibreOffice non trovato: impossibile convertire il file."
+            self.status_bar.showMessage(msg, 7000)
+            QMessageBox.warning(self, "Conversione", msg)
+            return None, None
+
+        output_dirs = [self.local_tmp_dir, Path(tempfile.gettempdir()) / "dropprint"]
+        lo_profile_dir = Path(tempfile.gettempdir()) / "dropprint-lo-profile"
+
+        for base_output_dir in output_dirs:
+            try:
+                base_output_dir.mkdir(parents=True, exist_ok=True)
+                lo_profile_dir.mkdir(parents=True, exist_ok=True)
+
+                job_tmp_dir = base_output_dir / f"{input_path.stem}_{int(time.time())}"
+                job_tmp_dir.mkdir(parents=True, exist_ok=True)
+
+                pdf_file = job_tmp_dir / f"{input_path.stem}.pdf"
+                if pdf_file.exists():
+                    try:
+                        pdf_file.unlink()
+                    except Exception:
+                        pass
+
+                self.status_bar.showMessage(
+                    f"Conversione in corso: {input_path.name} -> PDF...",
+                    5000
+                )
+                QApplication.processEvents()
+
+                result = subprocess.run(
+                    [
+                        libreoffice_cmd,
+                        "--headless",
+                        "--nologo",
+                        "--nolockcheck",
+                        "--nodefault",
+                        "--norestore",
+                        f"-env:UserInstallation=file://{lo_profile_dir}",
+                        "--convert-to", "pdf:writer_pdf_Export",
+                        "--outdir", str(job_tmp_dir),
+                        str(input_path),
+                    ],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    universal_newlines=True,
+                )
+
+                print("=== LibreOffice stdout ===")
+                print(result.stdout)
+                print("=== LibreOffice stderr ===")
+                print(result.stderr)
+                print("=== return code ===")
+                print(result.returncode)
+
+                if pdf_file.exists():
+                    self.status_bar.showMessage(
+                        f"Conversione completata: {pdf_file.name}",
+                        4000
+                    )
+                    return str(pdf_file), str(job_tmp_dir)
+
+            except Exception as e:
+                print(f"Errore conversione in {base_output_dir}: {e}")
+
+        msg = (
+            f"Conversione non riuscita per:\n{input_path.name}\n\n"
+            "Avvia il programma da terminale per vedere il dettaglio stdout/stderr."
+        )
+        self.status_bar.showMessage("Conversione non riuscita", 7000)
+        QMessageBox.warning(self, "Conversione fallita", msg)
+        return None, None
+
+    def prepare_file_for_print(self, file_path):
+        printable_exts = {
+            ".pdf", ".png", ".jpg", ".jpeg", ".txt", ".log", ".ps"
+        }
+
+        convertible_exts = {
+            ".odt", ".ods", ".odp",
+            ".doc", ".docx",
+            ".xls", ".xlsx",
+            ".ppt", ".pptx",
+            ".rtf", ".csv"
+        }
+
+        ext = Path(file_path).suffix.lower()
+
+        if ext in printable_exts:
+            return file_path, False, None
+
+        if ext in convertible_exts:
+            converted, temp_dir = self.convert_to_pdf(file_path)
+            if converted:
+                return converted, True, temp_dir
+            return None, False, None
+
+        self.status_bar.showMessage(f"Formato non supportato: {ext}", 7000)
+        return None, False, None
+
 
     def init_ui(self):
         self.setWindowTitle("DropPrint")
@@ -89,7 +204,10 @@ class DropPrint(QWidget):
         )
 
         frame_layout = QVBoxLayout(self.drop_frame)
-        self.drop_label = QLabel("Trascina qui i file per stampare\n(PDF, JPG, PNG, TXT)")
+        self.drop_label = QLabel(
+            "Trascina qui i file per stampare\n"
+            "(PDF, JPG, PNG, TXT, LOG, LibreOffice, DOC/DOCX, XLS/XLSX, PPT/PPTX)"
+        )
         self.drop_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.drop_label.setFont(QFont("sans-serif", 12))
         frame_layout.addWidget(self.drop_label)
@@ -146,10 +264,15 @@ class DropPrint(QWidget):
 
         tray_menu.addSeparator()
 
+        info_action = QAction("Info", self)
+        info_action.triggered.connect(self.show_about)
+        tray_menu.addAction(info_action)
+
+        tray_menu.addSeparator()
+
         quit_action = QAction("Esci", self)
         quit_action.triggered.connect(QApplication.instance().quit)
         tray_menu.addAction(quit_action)
-
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.activated.connect(self.on_tray_activated)
         self.tray_icon.show()
@@ -165,6 +288,16 @@ class DropPrint(QWidget):
         self.show()
         self.raise_()
         self.activateWindow()
+
+    def show_about(self):
+        QMessageBox.information(
+            self,
+            "Informazioni su DropPrint",
+            "DropPrint\n\n"
+            "Autore: Gianluca Bolognesi\n"
+            "Versione: 2026-04\n"
+            "Licenza: MIT"
+        )
 
     def closeEvent(self, event):
         if self.tray_icon and self.tray_icon.isVisible():
@@ -202,8 +335,35 @@ class DropPrint(QWidget):
 
         for file_path in files:
             file_name = os.path.basename(file_path)
+
             try:
-                job_id = self.conn.printFile(printer_name, file_path, file_name, {})
+                self.status_bar.showMessage(f"Preparazione file: {file_name}", 3000)
+                QApplication.processEvents()
+
+                file_to_print, was_converted, temp_dir = self.prepare_file_for_print(file_path)
+
+                if not file_to_print:
+                    self.status_bar.showMessage(
+                        f"Conversione fallita, file saltato: {file_name}",
+                        7000
+                    )
+                    continue
+
+                if was_converted:
+                    self.status_bar.showMessage(
+                        f"Invio PDF convertito alla stampante: {file_name}",
+                        4000
+                    )
+                else:
+                    self.status_bar.showMessage(
+                        f"Invio alla stampante: {file_name}",
+                        3000
+                    )
+
+                QApplication.processEvents()
+
+                job_id = self.conn.printFile(printer_name, file_to_print, file_name, {})
+
                 item = QListWidgetItem(f"⏳ {file_name} (ID: {job_id})")
                 item.setForeground(QColor("red"))
                 self.file_list.addItem(item)
@@ -213,10 +373,18 @@ class DropPrint(QWidget):
                     "file_name": file_name,
                     "finish_time": None,
                     "last_state": None,
+                    "temp_file": file_to_print if was_converted else None,
+                    "temp_dir": temp_dir if was_converted else None,
                 }
-                self.status_bar.showMessage(f"Inviato a {printer_name}: {file_name}", 3000)
+
+                self.status_bar.showMessage(
+                    f"Inviato a {printer_name}: {file_name}",
+                    3000
+                )
+
             except Exception as e:
                 self.status_bar.showMessage(f"Errore di stampa: {e}", 7000)
+
 
     def get_job_state(self, job_id, cups_jobs):
         job_info = cups_jobs.get(job_id)
@@ -293,13 +461,33 @@ class DropPrint(QWidget):
             if info["finish_time"] is not None and current_time - info["finish_time"] > 60:
                 jobs_to_remove.append(job_id)
 
+# Pulizia finale
+# rimozione file temporanei e scritte dei file stampati dalla lista in coda
+
         for job_id in jobs_to_remove:
-            item_to_del = self.active_jobs[job_id]["item"]
+            job_info = self.active_jobs[job_id]
+
+            temp_file = job_info.get("temp_file")
+            temp_dir = job_info.get("temp_dir")
+
+            if temp_file and os.path.exists(temp_file):
+                try:
+                    os.remove(temp_file)
+                except Exception as e:
+                    print(f"Errore rimozione file temporaneo {temp_file}: {e}")
+
+            if temp_dir and os.path.exists(temp_dir):
+                try:
+                    shutil.rmtree(temp_dir, ignore_errors=True)
+                except Exception as e:
+                    print(f"Errore rimozione directory temporanea {temp_dir}: {e}")
+
+            item_to_del = job_info["item"]
             row = self.file_list.row(item_to_del)
             if row >= 0:
                 self.file_list.takeItem(row)
-            del self.active_jobs[job_id]
 
+            del self.active_jobs[job_id]
 
 def main():
     app = QApplication(sys.argv)
