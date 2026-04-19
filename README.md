@@ -26,7 +26,11 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè sele
 - 🎛️ **Selezione stampante**: cambia al volo la stampante di destinazione.
 - 🐧 **Ottimizzato per openSUSE**: integrazione perfetta con CUPS.
 - 📄 **Tipi di file supportati**: CUPS gestisce nativamente PDF, immagini (JPG, PNG)
-- **File non supportati**: Se trascini un file .docx, CUPS potrebbe non sapere come renderizzarlo a meno che non ci siano librerie che lo supportino
+  - aggiunta compatibilità con formati :
+  - ".odt", ".ods", ".odp" ---> LibreOffice / OpenOffcie
+  - ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx" --> MS Office (potrebbero non essere 100% impaginati correttamente, soprattutto DOCX complessi)
+  - ".rtf", ".csv" 
+- **File non supportati**: Se trascini un file non supportato non viene accettato, CUPS potrebbe non sapere come renderizzarlo a meno che non ci siano librerie che lo supportino
 
 ## ⚙️ Requisiti
 
@@ -34,7 +38,9 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè sele
 - Python 3.10+
 - PyQt6
 - pycups
-- 
+- LibreOffice già installato
+  - Serve se si vuole stampare direttamente file openDocument di LibreOffice
+     
 ## 🖥️ Installazione su linux in generale
 - Clicca sul tasto in alto a destra verde --> download ZIP
 - Vai nella cartella /home/UTENTE/Scaricati/ e scompatta dropprin-main.zip
@@ -70,6 +76,10 @@ a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessor
 - se si effetuano modifiche al file dropprint.py contenuto nella cartella /Scaricati/dropprint-main/ le modifiche avverranno anche nel programma in modo diretto, in caso di aggiornamenti, conviene aggiornare il contenuto di solo quel file.
 - Se avete segnalazioni o migliorie da far fare comunicatelo, per ora la struttura è molto semplice, di fatto prendi i file butti dentro e lui manda in stampa immediata
 
+## Aggiornamenti
+- 2026.04.19 : È stata aggiunta compatibilità anche per i file LibreOffice, vengono di fatto convertiti all'interno della cartella `/tmp `  conetnuta in dropprint in file pdf, non è  garantita piena compatibilità con i file MS Offcie, potrebbero esserci differenze d'impaginazione
+
+  
 ## 📜 Licenza
 
 MIT
