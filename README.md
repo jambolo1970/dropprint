@@ -81,7 +81,7 @@ a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessor
 - Se avete segnalazioni o migliorie da far fare comunicatelo, per ora la struttura è molto semplice, di fatto prendi i file butti dentro e lui manda in stampa immediata
 
 ## Aggiornamenti
-- 2026.04.19 : È stata aggiunta compatibilità anche per i file LibreOffice, vengono di fatto convertiti all'interno della cartella `/tmp `  conetnuta in dropprint in file pdf, non è  garantita piena compatibilità con i file MS Offcie, potrebbero esserci differenze d'impaginazione
+- 2026.04.19 : È stata aggiunta compatibilità anche per i file LibreOffice, vengono di fatto convertiti all'interno della cartella `/tmp `  conetnuta in dropprint in file pdf, non è  garantita piena compatibilità con i file MS Office, potrebbero esserci differenze d'impaginazione
 
   
 ## 📜 Licenza
