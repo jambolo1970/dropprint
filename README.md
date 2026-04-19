@@ -19,6 +19,10 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè sele
 - click sul tray per aprire o nascondere la finestra
 - chiusura finestra senza terminare il programma
 
+Guarda il video dimostrativo su [YouTube]([https://www.youtube.com/watch?v=xhwxjXZ4zBk](https://youtu.be/xhwxjXZ4zBk).
+
+[![Guarda il Video su YouTube di come OpenSuse comprime il file](https://img.youtube.com/vi/xhwxjXZ4zBk/0.jpg)]([https://www.youtube.com/watch?v=xhwxjXZ4zBk])
+
 
 ## ℹ️ Caratteristiche
 - 🚀 **Batch Printing**: trascina decine di file e stampali tutti insieme.
