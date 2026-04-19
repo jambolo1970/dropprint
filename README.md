@@ -44,8 +44,8 @@ Tutto questo lo si fa tramite la funzione semplice del drag-and-drop, cioè sele
 ## 🖥️ Installazione su linux in generale
 - Clicca sul tasto in alto a destra verde --> download ZIP
   - oppure: **Clona il repository:** e estrai lo zip.
-  - ```bash git clone https://github.com/jambolo1970/OCIO.git
-    cd OCIO```
+  - apri un terminale ```git clone https://github.com/jambolo1970/dropprint.git```
+  - ```cd dropprint```
 - Vai nella cartella /home/UTENTE/Scaricati/ e scompatta dropprint-main.zip se usato il primo metodo
   - altrimenti col secondo metodo si chiamerà semplicemente dropprint 
 - Entra nella cartella e apri il terminale, poi segui i passagi sotto
