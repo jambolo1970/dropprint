@@ -54,7 +54,7 @@ Guarda il video dimostrativo su [YouTube]([https://www.youtube.com/watch?v=xhwxj
   - altrimenti col secondo metodo si chiamerà semplicemente dropprint 
 - Entra nella cartella e apri il terminale, poi segui i passagi sotto
 
-## 💻 Installazione su openSUSE
+## 💻 Installazione su openSUSE/LinuxMint
 Assicurati di avere le dipendenze di sistema:
 ```bash
 sudo zypper install python3-pycups python3-qt6
@@ -76,9 +76,16 @@ per avere un icona e niente terminali, apri il terminale
 ```bash
 cd ~/Scaricati/dropprint-main/
 chmod +x crea-lanciatore.sh
-sh crea-lanciatore.sh
+./crea-lanciatore.sh
 ```
-a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessori** e una volta lanciato sarà presente nel vassoio di sistema in basso a destra come icona **DP**, cliccando sopra si aprirà la finestra ed all'interno potete trascinare i vostri file supportati.
+a questo punto vi trovate l'icona nel menu all'interno di **Accessori** e una volta lanciato sarà presente nel vassoio di sistema in basso a destra come icona **DP**, cliccando sopra si aprirà la finestra ed all'interno potete trascinare i vostri file supportati.
+
+## ♻️ Disinstallazione
+Per rimuovere l'applicazione se è stato utilizzato crea-lanciatore.sh :
+```bash
+chmod +x rimuovi-lanciatore
+./rimuovi-lanciatore.sh
+```
 
 ## 👨‍🔧 Note tecniche
 - se si effetuano modifiche al file dropprint.py contenuto nella cartella /Scaricati/dropprint-main/ le modifiche avverranno anche nel programma in modo diretto, in caso di aggiornamenti, conviene aggiornare il contenuto di solo quel file.
@@ -86,6 +93,7 @@ a questo punto vi trovate l'icona nel menu di OpenSuse all'interno di **Accessor
 
 ## Aggiornamenti
 - 2026.04.19 : È stata aggiunta compatibilità anche per i file LibreOffice, vengono di fatto convertiti all'interno della cartella `/tmp `  conetnuta in dropprint in file pdf, non è  garantita piena compatibilità con i file MS Office, potrebbero esserci differenze d'impaginazione
+- 2026.04.20 : È stato aggiornato il lanciatore, ora compatibile anche con LinuxMint e simili, in più ho aggiunto anche la possibilità di rimuovere l'installazione con rimuovi-lanciatore.sh.
 
   
 ## 📜 Licenza
