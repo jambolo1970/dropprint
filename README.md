@@ -70,7 +70,7 @@ chmod +x dropprint.py
 per lanciare il programma in modo diretto
 
 ```
-python3 dorpprint.py
+python3 dropprint.py
 ```
 per avere un icona e niente terminali, apri il terminale
 ```bash
